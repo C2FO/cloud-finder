@@ -28,3 +28,9 @@ subprocess and to eval its output like so:
 eval $(cloud-finder --output=eval)
 echo $CLOUD_PROVIDER
 ```
+
+
+## Exit Codes
+
+0 - Able to determine a Cloud Provider
+1 - Not able to determine a Cloud Provider
