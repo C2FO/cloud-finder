@@ -1,30 +1,26 @@
 package main
 
 import (
-	"log"
-	"os"
 	"time"
 
 	"github.com/c2fo/cloud-finder/pkg/cloudfinder"
+	"github.com/c2fo/cloud-finder/pkg/logging"
 	_ "github.com/c2fo/cloud-finder/pkg/providers/aws"
 	_ "github.com/c2fo/cloud-finder/pkg/providers/gcp"
 )
 
-var debug = true
-
 func main() {
-
-	if debug {
-		log.Printf("Registered the following providers: %v", cloudfinder.Providers())
-	}
+	logging.EnableDebug()
+	logging.Printf("Registered the following providers: %v", cloudfinder.Providers())
 
 	cf := cloudfinder.New(
 		&cloudfinder.Options{
 			HTTPTimeout: 5 * time.Second,
 		},
 	)
+
 	result := cf.Discover()
 	if result == nil {
-		os.Exit(1)
+		logging.Fatalf("Unable to determine which cloud we are in")
 	}
 }
