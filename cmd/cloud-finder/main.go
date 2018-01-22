@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"time"
 
 	"github.com/c2fo/cloud-finder/pkg/cloudfinder"
@@ -9,8 +10,19 @@ import (
 	_ "github.com/c2fo/cloud-finder/pkg/providers/gcp"
 )
 
+var isDebug bool
+
+func init() {
+	flag.BoolVar(&isDebug, "debug", false, "Enable debug output")
+}
+
 func main() {
-	logging.EnableDebug()
+	flag.Parse()
+
+	if isDebug {
+		logging.EnableDebug()
+	}
+
 	logging.Printf("Registered the following providers: %v", cloudfinder.Providers())
 
 	cf := cloudfinder.New(
