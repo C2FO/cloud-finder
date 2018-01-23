@@ -1,6 +1,9 @@
 package provider
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 // Options that get passed to the Check method of each Provider
 type Options struct {
@@ -9,6 +12,7 @@ type Options struct {
 
 // Result from calling check on that particular Provider
 type Result interface {
+	fmt.Stringer
 	Name() string
 	ToEval() string
 }

@@ -25,3 +25,12 @@ func (r Result) ToEval() string {
 	}
 	return strings.Join(exports, "\n")
 }
+
+func (r Result) String() string {
+	r.responses["CF_CLOUD"] = r.Name()
+	items := make([]string, 0)
+	for k, v := range r.responses {
+		items = append(items, fmt.Sprintf("%s=%s", k, v))
+	}
+	return strings.Join(items, "\n")
+}
