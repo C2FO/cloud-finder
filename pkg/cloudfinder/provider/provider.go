@@ -16,4 +16,5 @@ type Result interface {
 // Provider interface that providers implement.
 type Provider interface {
 	Check(*Options) Result
+	Name() string
 }
