@@ -1,9 +1,11 @@
 package cloudfinder
 
 import (
+	"sync"
 	"time"
 
 	"github.com/c2fo/cloud-finder/pkg/cloudfinder/provider"
+	"github.com/c2fo/cloud-finder/pkg/logging"
 )
 
 // Result is what we get when we check a cloud provider.
@@ -14,6 +16,7 @@ type Result interface {
 
 // Options configure cloudfinder and change how it behaves.
 type Options struct {
+	Timeout     time.Duration
 	HTTPTimeout time.Duration
 }
 
@@ -35,15 +38,42 @@ func New(opts *Options) *CloudFinder {
 // not be determined.
 func (cf *CloudFinder) Discover() Result {
 	ch := make(chan provider.Result)
+	wg := sync.WaitGroup{}
+
+	// Lock the registry so we don't get an unexpected change in the number of
+	// providers between when we count them and when we iterate over them
+	registryMu.Lock()
+	defer registryMu.Unlock()
+
+	// Add the number of providers to a wait group. Start a goroutine that waits
+	// until all providers are done. Then send a nil on the channel to immediately
+	// force a return from this function so we don't have to wait for the
+	// timeout to occur.
+	wg.Add(len(registry))
+	go func() {
+		wg.Wait()
+		ch <- nil
+		logging.Printf("No provider returned a successfull result.")
+	}()
+
+	opts := &provider.Options{
+		HTTPTimeout: cf.opts.HTTPTimeout,
+	}
 	for _, pro := range registry {
 		go func(p provider.Provider) {
-			res := p.Check(&provider.Options{
-				HTTPTimeout: cf.opts.HTTPTimeout,
-			})
-			if res != nil {
-				ch <- res
+			r := p.Check(opts)
+			if r != nil {
+				ch <- r
 			}
+			wg.Done()
 		}(pro)
 	}
-	return nil
+
+	select {
+	case r := <-ch:
+		return r
+	case <-time.After(cf.opts.Timeout):
+		logging.Printf("Was not able to discover cloud provider before timeout of %0.0f seconds.", cf.opts.Timeout.Seconds())
+		return nil
+	}
 }
