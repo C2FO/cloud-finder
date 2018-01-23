@@ -12,9 +12,11 @@ import (
 )
 
 var isDebug bool
+var outputType string
 
 func init() {
 	flag.BoolVar(&isDebug, "debug", false, "Enable debug output")
+	flag.StringVar(&outputType, "output", "text", "Output type. Default: text")
 }
 
 func main() {
@@ -38,5 +40,10 @@ func main() {
 		logging.Fatalf("Unable to determine which cloud we are in")
 	}
 
-	fmt.Println(result.ToEval())
+	switch outputType {
+	case "eval":
+		fmt.Println(result.ToEval())
+	default:
+		fmt.Println(result)
+	}
 }

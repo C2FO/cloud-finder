@@ -25,7 +25,7 @@ The most common use case for this right now is to call cloud-finder in a
 subprocess and to eval its output like so:
 
 ```sh
-eval $(cloud-finder --output=eval)
+eval $(cloud-finder -output=eval)
 echo $CLOUD_PROVIDER
 ```
 
