@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"time"
 
 	"github.com/c2fo/cloud-finder/pkg/cloudfinder"
@@ -27,6 +28,7 @@ func main() {
 
 	cf := cloudfinder.New(
 		&cloudfinder.Options{
+			Timeout:     30 * time.Second,
 			HTTPTimeout: 5 * time.Second,
 		},
 	)
@@ -35,4 +37,6 @@ func main() {
 	if result == nil {
 		logging.Fatalf("Unable to determine which cloud we are in")
 	}
+
+	fmt.Println(result.ToEval())
 }
