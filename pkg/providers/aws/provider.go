@@ -9,7 +9,11 @@ import (
 	"github.com/c2fo/cloud-finder/pkg/logging"
 )
 
-const name = "aws"
+// Constants for the AWS provider
+const (
+	name    = "aws"
+	baseURL = "http://169.254.169.254"
+)
 
 // Provider is the AWS cloudfinder provider
 type Provider struct{}
@@ -28,7 +32,7 @@ func (p *Provider) Name() string {
 func (p *Provider) Check(opts *provider.Options) provider.Result {
 	httpClient := &http.Client{Timeout: opts.HTTPTimeout}
 	client := contrib.NewClient(httpClient)
-	client.SetBaseURL("http://169.254.169.254")
+	client.SetBaseURL(baseURL)
 
 	requests := map[string]string{
 		"AWS_AMI_ID":            "/latest/meta-data/ami-id",
