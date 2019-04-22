@@ -1,6 +1,6 @@
 # Cloud Finder
 
-[![Build Status](https://travis-ci.org/C2FO/cloud-finder.svg?branch=master)](https://travis-ci.org/C2FO/cloud-finder)
+[![Build Status](https://travis-ci.org/C2FO/cloud-finder.svg?branch=master)](https://travis-ci.org/C2FO/cloud-finder) [![codecov](https://codecov.io/gh/c2fo/cloud-finder/branch/master/graph/badge.svg)](https://codecov.io/gh/c2fo/cloud-finder)
 
 This project should serve as a way to help processes discover which cloud,
 region, endpoint, etc. they need for dynamic configuration. 
