@@ -10,7 +10,10 @@ import (
 	"github.com/c2fo/cloud-finder/pkg/logging"
 )
 
-const name = "gcp"
+const (
+	baseURL = "http://metadata.google.internal/computeMetadata/v1"
+	name    = "gcp"
+)
 
 // Provider is the GCP cloudfinder provider
 type Provider struct{}
@@ -29,7 +32,7 @@ func (p *Provider) Name() string {
 func (p *Provider) Check(opts *provider.Options) provider.Result {
 	httpClient := &http.Client{Timeout: opts.HTTPTimeout}
 	client := contrib.NewClient(httpClient)
-	client.SetBaseURL("http://metadata.google.internal/computeMetadata/v1")
+	client.SetBaseURL(baseURL)
 	client.SetHeader("Metadata-Flavor", "Google")
 
 	requests := map[string]string{
