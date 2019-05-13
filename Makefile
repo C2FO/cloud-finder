@@ -4,3 +4,6 @@ test:
 
 docker-image:
 	docker build -t cloud-finder .
+
+clean:
+	rm -rf coverage.txt
