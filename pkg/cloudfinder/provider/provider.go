@@ -13,7 +13,7 @@ type Options struct {
 // Result from calling check on that particular Provider
 type Result interface {
 	fmt.Stringer
-	Name() string
+	Provider() Provider
 	ToEval() string
 }
 

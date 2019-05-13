@@ -8,12 +8,6 @@ import (
 	"github.com/c2fo/cloud-finder/pkg/logging"
 )
 
-// Result is what we get when we check a cloud provider.
-type Result interface {
-	// print a string that can be eval'd in bash.
-	ToEval() string
-}
-
 // Options configure cloudfinder and change how it behaves.
 type Options struct {
 	Timeout     time.Duration
@@ -36,7 +30,7 @@ func New(opts *Options) *CloudFinder {
 // Discover which cloud provider we are in an return a Result accordingly.
 // Returns nil if we are not in a cloud provider, or the cloud provider could
 // not be determined.
-func (cf *CloudFinder) Discover() Result {
+func (cf *CloudFinder) Discover() provider.Result {
 	ch := make(chan provider.Result)
 	wg := sync.WaitGroup{}
 

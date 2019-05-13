@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/c2fo/cloud-finder/pkg/cloudfinder/provider"
 )
 
 var azRegexp = regexp.MustCompile(`\d`)
@@ -15,14 +17,14 @@ type Result struct {
 	responses map[string]string
 }
 
-// Name returns the Cloud result name
-func (r Result) Name() string {
-	return "AWS"
+// Provider returns the Provider that made the Result.
+func (r Result) Provider() provider.Provider {
+	return &Provider{}
 }
 
 // ToEval returns a string which should be able to be eval'd in a shell
 func (r Result) ToEval() string {
-	r.responses["CF_CLOUD"] = r.Name()
+	r.responses["CF_CLOUD"] = strings.ToUpper(r.Provider().Name())
 	exports := make([]string, 0)
 
 	for k, v := range r.responses {
@@ -32,7 +34,7 @@ func (r Result) ToEval() string {
 }
 
 func (r Result) String() string {
-	r.responses["CF_CLOUD"] = r.Name()
+	r.responses["CF_CLOUD"] = strings.ToUpper(r.Provider().Name())
 	items := make([]string, 0)
 	for k, v := range r.responses {
 		items = append(items, fmt.Sprintf("%s=%s", k, v))
@@ -47,7 +49,7 @@ func (r Result) AmiID() string {
 
 // AmiLaunchIndex returns the launch index of the AMI.
 func (r Result) AmiLaunchIndex() (int64, error) {
-	strIndex, _ := r.responses["AWS_AMI_LAUNCH_INDEX"]
+	strIndex := r.responses["AWS_AMI_LAUNCH_INDEX"]
 	return strconv.ParseInt(strIndex, 10, 64)
 }
 
