@@ -18,7 +18,7 @@ region, endpoint, etc. they need for dynamic configuration.
 <!-- /TOC -->
 
 # Rationale
-
+bump
 When deploying docker containers to different clouds, you might often want to
 configure your application based on specific rules. Things that might be
 important to you may include:
