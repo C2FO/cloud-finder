@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/C2FO/cloud-finder.svg?branch=master)](https://travis-ci.org/C2FO/cloud-finder) [![codecov](https://codecov.io/gh/c2fo/cloud-finder/branch/master/graph/badge.svg)](https://codecov.io/gh/c2fo/cloud-finder)
 
 This project should serve as a way to help processes discover which cloud,
-region, endpoint, etc. they need for dynamic configuration. 
+region, endpoint, etc. they need for dynamic configuration.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
@@ -63,6 +63,7 @@ AWS_AVAILABILITY_ZONE=us-west-2c
 AWS_AMI_ID=ami-edfc2abd
 AWS_HOSTNAME=ip-1-1-1-1
 AWS_INSTANCE_ID=i-8af98240
+AWS_DOMAIN=amazonaws.com
 ```
 
 ### GCP
