@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2019-11-08
+### Added
+- Export the AWS region domain as `AWS_DOMAIN`.
+
 ## [0.1.0] - 2019-05-13
 ### Added
 - Initial `cloud-finder` implementation.

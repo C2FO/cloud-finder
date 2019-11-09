@@ -86,3 +86,8 @@ func (r Result) AvailabilityZone() string {
 func (r Result) Region() string {
 	return r.responses["AWS_REGION"]
 }
+
+// Domain returns the AWS domain of the region.
+func (r Result) Domain() string {
+	return r.responses["AWS_DOMAIN"]
+}

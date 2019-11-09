@@ -22,6 +22,7 @@ func TestRegion(t *testing.T) {
 	assert.Equal(t, "", region("us-west"))
 	assert.Equal(t, "ap-south-1", region("ap-south-1a"))
 	assert.Equal(t, "us-gov-west-1", region("us-gov-west-1"))
+	assert.Equal(t, "cn-north-1", region("cn-north-1a"))
 }
 
 func TestAWSProviderImplementsProvider(t *testing.T) {
@@ -44,6 +45,7 @@ func withTestRoutes(t *testing.T, f func(t *testing.T)) {
 	registerHTTPMockResponse("GET", "/latest/meta-data/local-ipv4", `10.0.1.181`)
 	registerHTTPMockResponse("GET", "/latest/meta-data/mac", `0a:2e:31:ec:fa:45`)
 	registerHTTPMockResponse("GET", "/latest/meta-data/placement/availability-zone", `us-west-2c`)
+	registerHTTPMockResponse("GET", "/latest/meta-data/services/domain", `amazonaws.com`)
 
 	f(t)
 }
@@ -75,5 +77,6 @@ func TestAWSProvider(t *testing.T) {
 
 		assert.Equal(t, "us-west-2c", awsResult.AvailabilityZone())
 		assert.Equal(t, "us-west-2", awsResult.Region())
+		assert.Equal(t, "amazonaws.com", awsResult.Domain())
 	})
 }

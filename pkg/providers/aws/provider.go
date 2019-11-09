@@ -43,6 +43,7 @@ func (p *Provider) Check(opts *provider.Options) provider.Result {
 		"AWS_LOCAL_IPV4":        "/latest/meta-data/local-ipv4",
 		"AWS_MAC":               "/latest/meta-data/mac",
 		"AWS_AVAILABILITY_ZONE": "/latest/meta-data/placement/availability-zone",
+		"AWS_DOMAIN":            "/latest/meta-data/services/domain",
 	}
 
 	responses, err := client.GetAll(requests)
