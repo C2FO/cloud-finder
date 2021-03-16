@@ -54,6 +54,9 @@ func TestAWSProvider(t *testing.T) {
 	awsProvider := &Provider{}
 	providerOptions := &provider.Options{HTTPTimeout: 5 * time.Second}
 
+	result := awsProvider.Check(&provider.Options{HTTPTimeout: 100 * time.Millisecond})
+	assert.Nil(t, result)
+
 	withTestRoutes(t, func(t *testing.T) {
 		result := awsProvider.Check(providerOptions)
 		assert.NotNil(t, result, "Result should not be nil.")
