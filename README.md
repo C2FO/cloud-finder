@@ -7,17 +7,18 @@ region, endpoint, etc. they need for dynamic configuration.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Cloud Finder](#cloud-finder)
 - [Rationale](#rationale)
 - [Usage](#usage)
-	- [Exit Codes](#exit-codes)
-	- [Environment Variables](#environment-variables)
+	- [Binary](#binary)
+		- [Exit Codes](#exit-codes)
+		- [Environment Variables](#environment-variables)
 		- [AWS](#aws)
 		- [GCP](#gcp)
+	- [In Go Code](#in-go-code)
 
 <!-- /TOC -->
 
-# Rationale
+## Rationale
 
 When deploying docker containers to different clouds, you might often want to
 configure your application based on specific rules. Things that might be
@@ -32,7 +33,9 @@ the application could figure out all of these things for itself and configure
 itself accordingly. However, we often must deal with what we have. In some
 cases, getting that logic into the main application might not be feasible.
 
-# Usage
+## Usage
+
+### Binary
 
 The most common use case for this right now is to call cloud-finder in a
 subprocess and to eval its output like so:
@@ -43,14 +46,14 @@ echo $CF_CLOUD
 ```
 
 
-## Exit Codes
+#### Exit Codes
 
 0 - Able to determine a Cloud Provider
 1 - Not able to determine a Cloud Provider
 
-## Environment Variables
+#### Environment Variables
 
-### AWS
+#### AWS
 
 ```
 CF_CLOUD=AWS
@@ -66,7 +69,7 @@ AWS_INSTANCE_ID=i-8af98240
 AWS_DOMAIN=amazonaws.com
 ```
 
-### GCP
+#### GCP
 
 ```
 GCP_INSTANCE_NAME=my-instance-name
@@ -78,4 +81,53 @@ CF_CLOUD=GCP
 GCP_HOSTNAME=my-instance-name.c.my-application.internal
 GCP_IMAGE=projects/gke-node-images/global/images/gke-1-8-6-gke-0-cos-stable-63-10032-71-0-p-v180105-pre
 GCP_INSTANCE_ID=2693006570498178293
+```
+
+### In Go Code
+
+You can also import this in your go code and use it to determine which cloud you are in like so:
+
+```
+package main
+
+import (
+	"fmt"
+	"log"
+	"time"
+
+	"github.com/c2fo/cloud-finder/pkg/providers/aws"
+	"github.com/c2fo/cloud-finder/pkg/providers/gcp"
+
+	"github.com/c2fo/cloud-finder/pkg/cloudfinder"
+)
+
+func main() {
+	log.Printf("Registered the following providers: %v", cloudfinder.Providers())
+
+	cf := cloudfinder.New(
+		&cloudfinder.Options{
+			Timeout:     30 * time.Second,
+			HTTPTimeout: 5 * time.Second,
+		},
+	)
+
+	result := cf.Discover()
+	if result == nil {
+		log.Fatalf("Unable to determine which cloud we are in")
+	}
+
+	var datacenter string
+
+	switch v := result.(type) {
+	case gcp.Result:
+		datacenter = v.Region()
+	case aws.Result:
+		datacenter = v.Region()
+	default:
+		log.Fatalf("No datacenter configuration has been defined for provider: %s\n", result.Name())
+	}
+
+	fmt.Printf("Determined we are in datacenter: %s\n", datacenter)
+	fmt.Println(v.ToString())
+}
 ```
