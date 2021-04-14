@@ -8,6 +8,7 @@ import (
 	"github.com/c2fo/cloud-finder/pkg/cloudfinder"
 	"github.com/c2fo/cloud-finder/pkg/logging"
 	_ "github.com/c2fo/cloud-finder/pkg/providers/aws"
+	_ "github.com/c2fo/cloud-finder/pkg/providers/azure"
 	_ "github.com/c2fo/cloud-finder/pkg/providers/gcp"
 )
 

@@ -46,6 +46,12 @@ func TestGCPProvider(t *testing.T) {
 	gcpProvider := &Provider{}
 	providerOptions := &provider.Options{HTTPTimeout: 5 * time.Second}
 
+	// Travis runs on GCP so need to activate the mock for a GCP error response
+	httpmock.Activate()
+	result := gcpProvider.Check(&provider.Options{HTTPTimeout: 100 * time.Millisecond})
+	httpmock.DeactivateAndReset()
+	assert.Nil(t, result)
+
 	withTestRoutes(t, func(t *testing.T) {
 		result := gcpProvider.Check(providerOptions)
 		assert.NotNil(t, result, "Result should not be nil.")

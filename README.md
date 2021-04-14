@@ -14,6 +14,7 @@ region, endpoint, etc. they need for dynamic configuration.
 		- [Environment Variables](#environment-variables)
 		- [AWS](#aws)
 		- [GCP](#gcp)
+		- [Azure](#azure)
 	- [In Go Code](#in-go-code)
 
 <!-- /TOC -->
@@ -81,6 +82,19 @@ CF_CLOUD=GCP
 GCP_HOSTNAME=my-instance-name.c.my-application.internal
 GCP_IMAGE=projects/gke-node-images/global/images/gke-1-8-6-gke-0-cos-stable-63-10032-71-0-p-v180105-pre
 GCP_INSTANCE_ID=2693006570498178293
+```
+
+#### Azure
+
+```
+AZURE_MAC=000D3A6C292C
+AZURE_LOCATION=UAENorth
+AZURE_ZONE=
+AZURE_TAGS=creationSource:aks-aks-default-00000000-vmss;orchestrator:Kubernetes:1.18.14;poolName:default;resourceNameSuffix:00000000
+AZURE_VM_SIZE=Standard_B8MS
+AZURE_VM_ID=00000000-856d-4a02-bbcf-00000000
+CF_CLOUD=AZURE
+AZURE_PRIVATE_IPV4=10.10.1.10
 ```
 
 ### In Go Code
