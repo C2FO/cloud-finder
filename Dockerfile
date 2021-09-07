@@ -1,4 +1,4 @@
-FROM golang:1.12 as builder
+FROM golang:1.17 as builder
 ENV GO111MODULE on
 WORKDIR /cloud-finder
 ADD . .
