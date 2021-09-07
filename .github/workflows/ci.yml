@@ -20,8 +20,9 @@ jobs:
         go-version: ${{ matrix.go }}
     - name: Run Tests
       run: make test
-    - name: Upload Coverage
-      run: bash <(curl -s https://codecov.io/bash)
+    - uses: codecov/codecov-action@v2
+      with:
+        fail_ci_if_error: true
 
   docker-build:
     name: Docker Build

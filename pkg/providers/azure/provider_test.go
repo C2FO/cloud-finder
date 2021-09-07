@@ -159,7 +159,10 @@ func TestAzureProvider(t *testing.T) {
 	azureProvider := &Provider{}
 	providerOptions := &provider.Options{HTTPTimeout: 5 * time.Second}
 
+	// GitHub Actions runs on Azure so need to activate the mock for a Azure error response
+	httpmock.Activate()
 	result := azureProvider.Check(&provider.Options{HTTPTimeout: 100 * time.Millisecond})
+	httpmock.DeactivateAndReset()
 	assert.Nil(t, result)
 
 	withTestRoutes(t, mockResp, func(t *testing.T) {
