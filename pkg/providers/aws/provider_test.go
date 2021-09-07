@@ -54,7 +54,9 @@ func TestAWSProvider(t *testing.T) {
 	awsProvider := &Provider{}
 	providerOptions := &provider.Options{HTTPTimeout: 5 * time.Second}
 
+	httpmock.Activate()
 	result := awsProvider.Check(&provider.Options{HTTPTimeout: 100 * time.Millisecond})
+	httpmock.DeactivateAndReset()
 	assert.Nil(t, result)
 
 	withTestRoutes(t, func(t *testing.T) {
