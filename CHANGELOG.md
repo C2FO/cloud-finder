@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Add Azure support
+
+### Changed
+- Use GitHub Actions instead of Travis CI
+
 ## [0.2.0] - 2019-11-08
 ### Added
 - Export the AWS region domain as `AWS_DOMAIN`.

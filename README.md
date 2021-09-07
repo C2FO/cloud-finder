@@ -1,21 +1,22 @@
 # Cloud Finder
 
-[![Build Status](https://travis-ci.org/C2FO/cloud-finder.svg?branch=master)](https://travis-ci.org/C2FO/cloud-finder) [![codecov](https://codecov.io/gh/c2fo/cloud-finder/branch/master/graph/badge.svg)](https://codecov.io/gh/c2fo/cloud-finder)
+![Build Status](https://github.com/c2fo/cloud-finder/actions/workflows/ci.yml/badge.svg?branch=master) [![codecov](https://codecov.io/gh/c2fo/cloud-finder/branch/master/graph/badge.svg)](https://codecov.io/gh/c2fo/cloud-finder)
 
 This project should serve as a way to help processes discover which cloud,
 region, endpoint, etc. they need for dynamic configuration.
 
 <!-- TOC depthFrom:1 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [Rationale](#rationale)
-- [Usage](#usage)
-	- [Binary](#binary)
-		- [Exit Codes](#exit-codes)
-		- [Environment Variables](#environment-variables)
-		- [AWS](#aws)
-		- [GCP](#gcp)
-		- [Azure](#azure)
-	- [In Go Code](#in-go-code)
+- [Cloud Finder](#cloud-finder)
+	- [Rationale](#rationale)
+	- [Usage](#usage)
+		- [Binary](#binary)
+			- [Exit Codes](#exit-codes)
+			- [Environment Variables](#environment-variables)
+			- [AWS](#aws)
+			- [GCP](#gcp)
+			- [Azure](#azure)
+		- [In Go Code](#in-go-code)
 
 <!-- /TOC -->
 
