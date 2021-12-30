@@ -2,7 +2,8 @@ name: Whitesource Unified Agent Scan - GO
 
 on:
   pull_request:
-    branches: [ master* ]
+    branches:
+    - master
 
 
 jobs:
