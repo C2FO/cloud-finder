@@ -2,12 +2,14 @@ name: Whitesource Unified Agent Scan - GO
 
 on:
   pull_request:
-    branches: [ master ]
+    branches:
+    - master
 
 
 jobs:
 
   build:
+    name: Build
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
